@@ -25,7 +25,6 @@ function selectFromInterval(arr, from, to) {
   }
 
   if (to < from) {
-    console.log('swap');
     [to, from] = [from, to];
   }
 
