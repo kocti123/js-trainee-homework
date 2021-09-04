@@ -24,14 +24,13 @@ function selectFromInterval(arr, from, to) {
     throw new TypeError('second and third arguments must be integers')
   }
 
-  if (to < from) {
-    [to, from] = [from, to];
-  }
+  if (to < from) [to, from] = [from, to];
 
   const newArr = [];
   for (let i = from - 1; i < to; i++) {
-    if (typeof arr[i] !== 'number') continue;
-    newArr.push(arr[i])
+    if (arr[i] !== undefined) {
+      newArr.push(arr[i])
+    }
   }
   return newArr;
 }
