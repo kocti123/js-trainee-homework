@@ -37,3 +37,22 @@ function selectFromInterval(arr, from, to) {
   return newArr;
 }
 
+const myIterable = {
+  from: 4,
+  to: 4,
+  [Symbol.iterator]: function () {
+    if (!Number.isInteger(this.from) || !Number.isInteger(this.to)) {
+      throw new TypeError('from and to must be present and be finite numbers')
+    }
+    if (this.to < this.from) {
+      throw new RangeError('to must be greater than from')
+    }
+
+    const iterator = function* () {
+      for (let value = this.from; value <= this.to; value++) {
+        yield value;
+      }
+    }
+    return iterator.call(this);
+  }
+}
