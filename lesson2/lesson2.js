@@ -26,13 +26,12 @@ function selectFromInterval(arr, from, to) {
 
   if (to < from) [to, from] = [from, to];
 
-  const newArr = [];
-  for (let i = from - 1; i < to; i++) {
-    if (arr[i] !== undefined) {
-      newArr.push(arr[i])
+  return arr.filter((num) => {
+    if (num >= from && num <= to) {
+      return true;
     }
-  }
-  return newArr;
+    return false;
+  });
 }
 
 const myIterable = {
