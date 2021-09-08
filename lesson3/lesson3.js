@@ -8,3 +8,11 @@ Array.prototype.myFilter = function (callback, thisArg) {
   return res;
 }
 
+function createDebounceFunction(func, delay) {
+  let timerId;
+  return function () {
+    if (timerId) clearTimeout(timerId);
+    timerId = setTimeout(func, delay);
+  };
+}
+
