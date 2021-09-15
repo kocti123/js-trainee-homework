@@ -1,60 +1,72 @@
 class Stack {
-  #stack;
-  #size;
-  #current;
+  #top;
+  #maxSize;
+  #curSize;
 
   constructor(size = 10) {
     if (!Number.isInteger(size)) {
       throw new Error('should be a integer');
     }
 
-    this.#stack = Array(size);
-    this.#current = -1;
-    this.#size = size;
+    this.#curSize = 0;
+    this.#maxSize = size;
   }
 
-  push(element) {
-    if (this.#size === this.#current + 1) {
+  push(value) {
+    if (this.#maxSize === this.#curSize) {
       throw new Error('exceeding size of stack');
     }
 
-    this.#current += 1;
-    this.#stack[this.#current] = element;
+    const node = {
+      value,
+      prev: undefined
+    };
+
+    if (!this.#top) {
+      this.#top = node;
+    } else {
+      node.prev = this.#top;
+      this.#top = node;
+    }
+    this.#curSize += 1;
   }
-  
+
   pop() {
-    if (this.#current === -1) {
+    if (this.#curSize === 0) {
       throw new Error('stack is empty');
     }
-    const retVal = this.#stack[this.#current];
-    this.#stack[this.#current] = undefined;
-    this.#current -= 1;
-    return retVal;
+    const last = this.#top;
+    this.#top = last.prev;
+    this.#curSize -= 1;
+    return last.value;
   }
 
   peek() {
-    if (this.#current === -1) return null;
-    return this.#stack[this.#current];
+    if (this.#curSize === 0) return null;
+    return this.#top.value;
   }
 
   toArray() {
-    const newArr = [];
-    for (let i = 0; i <= this.#current; i++) {
-      newArr.push(this.#stack[i]);
+    const arr = [];
+    let current = this.#top;
+    while (current) {
+      arr.push(current.value);
+      current = current.prev;
     }
-    return newArr;
+    return arr.reverse();
   }
 
   isEmpty() {
-    return this.#current === -1;
+    return this.#curSize === 0;
   }
 
   static fromIterable(iterable) {
-    const elements = [...iterable];
-    const stack = new Stack(elements.length);
-    stack.#stack = elements;
-    stack.#current = elements.length - 1;
-    return stack;
+    const elements = [...iterable]
+    const newStack = new Stack(elements.length);
+    for (let elem of elements) {
+      newStack.push(elem);
+    }
+    return newStack;
   }
 }
 
