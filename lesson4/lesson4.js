@@ -46,4 +46,4 @@ class Calculator {
   }
 }
 
-export { concatStrings, Calculator };
+module.exports= {concatStrings, Calculator};
