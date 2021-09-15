@@ -1,3 +1,10 @@
+class Node {
+  constructor(value, prev) {
+    this.value = value;
+    this.prev = prev;
+  }
+}
+
 class Stack {
   #top;
   #maxSize;
@@ -17,17 +24,7 @@ class Stack {
       throw new Error('exceeding size of stack');
     }
 
-    const node = {
-      value,
-      prev: undefined
-    };
-
-    if (!this.#top) {
-      this.#top = node;
-    } else {
-      node.prev = this.#top;
-      this.#top = node;
-    }
+    this.#top = new Node(value, this.#top);
     this.#curSize += 1;
   }
 
@@ -35,9 +32,11 @@ class Stack {
     if (this.#curSize === 0) {
       throw new Error('stack is empty');
     }
+
     const last = this.#top;
     this.#top = last.prev;
     this.#curSize -= 1;
+
     return last.value;
   }
 
@@ -49,10 +48,12 @@ class Stack {
   toArray() {
     const arr = [];
     let current = this.#top;
+
     while (current) {
       arr.push(current.value);
       current = current.prev;
     }
+
     return arr.reverse();
   }
 
@@ -63,9 +64,11 @@ class Stack {
   static fromIterable(iterable) {
     const elements = [...iterable]
     const newStack = new Stack(elements.length);
+
     for (let elem of elements) {
       newStack.push(elem);
     }
+
     return newStack;
   }
 }
