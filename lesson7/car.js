@@ -9,51 +9,6 @@ class Car {
   #isStarted = false;
   #mileage = 0;
 
-  start() {
-    if (this.#isStarted) {
-      throw Error('Машина уже заведена');
-    }
-    this.#isStarted = true;
-  }
-
-  shutDownEngine() {
-    if (!this.#isStarted) {
-      throw Error('Машина ещё не заведена');
-    }
-    this.#isStarted = false;
-  }
-
-  fillUpGasTank(volume) {
-    if (!Number.isFinite(volume) && volume <= 0) {
-      throw new Error('Неверное количество топлива для заправки')
-    }
-    if (this.#currentFuelVolume + volume > this.#maxFuelVolume) {
-      throw new Error('Топливный бак переполнен')
-    }
-
-    this.#currentFuelVolume += volume;
-  }
-
-  drive(speed, time) {
-    if (!Number.isFinite(speed) || speed <= 0) {
-      throw new Error('Неверная скорость');
-    }
-    if (!Number.isFinite(time) || time <= 0) {
-      throw new Error('Неверное количество часов');
-    }
-    if (speed > this.#maxSpeed) {
-      throw new Error('Машина не может ехать так быстро');
-    }
-    if (!this.#isStarted) {
-      throw new Error('Машина должна быть заведена, чтобы ехать');
-    }
-    if (this.#fuelConsumption * speed * time / 100 > this.#currentFuelVolume) {
-      throw new Error('Недостаточно топлива');
-    }
-    this.#currentFuelVolume -= this.#fuelConsumption * speed * time / 100;
-    this.#mileage += speed * time;
-  }
-
   get brand() {
     return this.#brand;
   }
@@ -148,6 +103,53 @@ class Car {
   get mileage() {
     return this.#mileage;
   }
+
+  start() {
+    if (this.#isStarted) {
+      throw Error('Машина уже заведена');
+    }
+    this.#isStarted = true;
+  }
+
+  shutDownEngine() {
+    if (!this.#isStarted) {
+      throw Error('Машина ещё не заведена');
+    }
+    this.#isStarted = false;
+  }
+
+  fillUpGasTank(volume) {
+    if (!Number.isFinite(volume) && volume <= 0) {
+      throw new Error('Неверное количество топлива для заправки')
+    }
+    if (this.#currentFuelVolume + volume > this.#maxFuelVolume) {
+      throw new Error('Топливный бак переполнен')
+    }
+
+    this.#currentFuelVolume += volume;
+  }
+
+  drive(speed, time) {
+    if (!Number.isFinite(speed) || speed <= 0) {
+      throw new Error('Неверная скорость');
+    }
+    if (!Number.isFinite(time) || time <= 0) {
+      throw new Error('Неверное количество часов');
+    }
+    if (speed > this.#maxSpeed) {
+      throw new Error('Машина не может ехать так быстро');
+    }
+    if (!this.#isStarted) {
+      throw new Error('Машина должна быть заведена, чтобы ехать');
+    }
+    if (this.#fuelConsumption * speed * time / 100 > this.#currentFuelVolume) {
+      throw new Error('Недостаточно топлива');
+    }
+    this.#currentFuelVolume -= this.#fuelConsumption * speed * time / 100;
+    this.#mileage += speed * time;
+  }
+
+
 }
 
 module.exports = Car;
