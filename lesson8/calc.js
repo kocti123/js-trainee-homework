@@ -56,11 +56,11 @@ class Calculator {
 
   calculate() {
     if (
-      this.firstNumber === '0' ||
-      this.result === '/' ||
-      this.secondNumber === '0'
+      this.action === '/' &&
+      (this.firstNumber === '0' ||
+        this.secondNumber === '0')
     ) {
-      return this.result;
+      return '';
     }
     if (this.secondNumber.length > 0) {
       const res = this.#actions[this.action](this.firstNumber, this.secondNumber)
